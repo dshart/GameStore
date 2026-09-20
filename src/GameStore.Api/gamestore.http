@@ -1,1 +1,4 @@
 GET http://localhost:5166/games
+
+###
+GET http://localhost:5166/games/32b0d2a1-1c03-4961-ad28-7a87119fe83f

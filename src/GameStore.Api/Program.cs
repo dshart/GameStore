@@ -29,4 +29,12 @@ List<Game> games =
 // GET /games
 app.MapGet("/games", () => games);
 
+// GET /games/122233-434d-43434....
+app.MapGet("/games/{id}", (Guid id) =>
+{
+    Game? game = games.Find(game => game.Id == id);
+
+    return game is null ? Results.NotFound() : Results.Ok(game);
+});
+
 app.Run();
