@@ -26,6 +26,8 @@ List<Game> games =
         ReleaseDate = new DateOnly(2022, 9, 27) }
 ];
 
+const string GetGameEndpointName = "GetGame";
+
 // GET /games
 app.MapGet("/games", () => games);
 
@@ -35,6 +37,19 @@ app.MapGet("/games/{id}", (Guid id) =>
     Game? game = games.Find(game => game.Id == id);
 
     return game is null ? Results.NotFound() : Results.Ok(game);
+})
+.WithName(GetGameEndpointName);
+
+// POST /games
+app.MapPost("/games", (Game game) =>
+{
+    game.Id = Guid.NewGuid();
+    games.Add(game);
+
+    return Results.CreatedAtRoute(
+        GetGameEndpointName,
+        new { id = game.Id },
+        game);
 });
 
 app.Run();
