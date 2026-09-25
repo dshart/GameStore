@@ -55,4 +55,22 @@ app.MapPost("/games", (Game game) =>
         game);
 });
 
+// PUT /games/122233-434d-43434....
+app.MapPut("/games/{id}", (Guid id, Game updatedGame) =>
+{
+    var existingGame = games.Find(game => game.Id == id);
+
+    if (existingGame is null)
+    {
+        return Results.NotFound();
+    }
+
+    existingGame.Name = updatedGame.Name;
+    existingGame.Genre = updatedGame.Genre;
+    existingGame.Price = updatedGame.Price;
+    existingGame.ReleaseDate = updatedGame.ReleaseDate;
+
+    return Results.NoContent();
+});
+
 app.Run();
