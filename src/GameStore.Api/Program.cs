@@ -73,4 +73,12 @@ app.MapPut("/games/{id}", (Guid id, Game updatedGame) =>
     return Results.NoContent();
 });
 
+// DELETE /games/122233-434d-43434....
+app.MapDelete("/games/{id}", (Guid id) =>
+{
+    games.RemoveAll(game => game.Id == id);
+
+    return Results.NoContent();
+});
+
 app.Run();
