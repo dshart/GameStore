@@ -1,7 +1,7 @@
 GET http://localhost:5166/games
 
 ###
-GET http://localhost:5166/games/c7b366e1-bcd4-416f-bae1-1136af3d374e
+GET http://localhost:5166/games/d812ed3a-86ec-4856-bb30-86a2edeb722d
 
 ###
 POST http://localhost:5166/games
@@ -15,15 +15,15 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:5166/games/da3b8a66-56e1-46d8-b17a-a92671245017
+PUT http://localhost:5166/games/0455a4ae-4820-4a84-98c7-2a73887f6ce6
 Content-Type: application/json
 
 {
-    "name": "Lego Batman",
+    "name": "sLego Batman",
     "genre": "Fighting",
     "price": 9.99,
     "releaseDate": "1992-07-15"
 }
 
 ###
-DELETE http://localhost:5166/games/e9cb7f6e-7581-4942-8f1f-e8152095424b
+DELETE http://localhost:5166/games/0455a4ae-4820-4a84-98c7-2a73887f6ce6
