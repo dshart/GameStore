@@ -1,7 +1,7 @@
 GET http://localhost:5166/games
 
 ###
-GET http://localhost:5166/games/3f6ca328-40b7-49dc-94bf-7ea06c6b1383
+GET http://localhost:5166/games/619a35d8-c147-4327-993a-9d1090eaadbc
 
 ###
 POST http://localhost:5166/games
@@ -9,9 +9,11 @@ Content-Type: application/json
 
 {
     "name": "Minecraft",
-    "genre": "Kids and Family",
+    "genreId": "b2c3d4e5-f678-90a1-b2c3-d4e5f67890a1",
     "price": 99.99,
-    "releaseDate": "2011-11-18"
+    "releaseDate": "2011-11-18",
+    "description": "Survive the night or create a work of art in the hit sandbox game! Build anything you can imagine, uncover mysteries, and face thrilling foes in an infinite world that's unique in every playthrough. There's no wrong way to play!"
+
 }
 
 ###
@@ -19,7 +21,7 @@ PUT http://localhost:5166/games/0455a4ae-4820-4a84-98c7-2a73887f6ce6
 Content-Type: application/json
 
 {
-    "name": "sLego Batman",
+    "name": "Lego Batman",
     "genre": "Fighting",
     "price": 9.99,
     "releaseDate": "1992-07-15"
