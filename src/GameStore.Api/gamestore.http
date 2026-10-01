@@ -1,7 +1,7 @@
 GET http://localhost:5166/games
 
 ###
-GET http://localhost:5166/games/619a35d8-c147-4327-993a-9d1090eaadbc
+GET http://localhost:5166/games/0060786b-045b-4a56-85d0-af6fb7503a84
 
 ###
 POST http://localhost:5166/games
@@ -17,18 +17,20 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:5166/games/0455a4ae-4820-4a84-98c7-2a73887f6ce6
+PUT http://localhost:5166/games/44a11f26-c004-44eb-b071-35d383b23e31
 Content-Type: application/json
 
 {
-    "name": "Lego Batman",
-    "genre": "Fighting",
+    "name": "Street Fighter II Turbo",
+    "genreId": "4e179397-c3f1-45ec-a271-c26f07ff64f3",
     "price": 9.99,
-    "releaseDate": "1992-07-15"
+    "releaseDate": "1992-07-15",
+    "description": "Street Fighter 2, the most iconic fighting game of all time, is back on the Nintendo Switch! The newest iteration of SFII in nearly 10 years, Ultra Street Fighter 2 features all of the classic characters, a host of new single player and multiplayer features, as well as two new fighters: Evil Ryu and Violent Ken!"
 }
 
+
 ###
-DELETE http://localhost:5166/games/3f6ca328-40b7-49dc-94bf-7ea06c6b1383
+DELETE http://localhost:5166/games/44a11f26-c004-44eb-b071-35d383b23e31
 
 ###
 GET http://localhost:5166/genres
