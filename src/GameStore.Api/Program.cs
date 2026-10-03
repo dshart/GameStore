@@ -116,14 +116,6 @@ public record GameDetailsDto(
     DateOnly ReleaseDate,
     string Description);
 
-public record GameSummaryDto(
-    Guid Id,
-    string Name,
-    string Genre,
-    decimal Price,
-    DateOnly ReleaseDate
-);
-
 public record CreateGameDto(
     [Required][StringLength(50)]
     string Name,
