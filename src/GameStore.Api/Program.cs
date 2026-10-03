@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using GameStore.Api.Models;
 using GameStore.Api.Data;
+using GameStore.Api.Features.Games.GetGames;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,15 +13,7 @@ const string GetGameEndpointName = "GetGame";
 
 GameStoreData data = new();
 
-// GET /games
-app.MapGet("/games", () => data.GetGames()
-                        .Select(game => new GameSummaryDto(
-                            game.Id,
-                            game.Name,
-                            game.Genre.Name,
-                            game.Price,
-                            game.ReleaseDate
-                        )));
+app.MapGetGames(data);
 
 // GET /games/122233-434d-43434....
 app.MapGet("/games/{id}", (Guid id) =>
