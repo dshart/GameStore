@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using GameStore.Api.Models;
+using GameStore.Api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,57 +10,22 @@ var app = builder.Build();
 
 const string GetGameEndpointName = "GetGame";
 
-List<Genre> genres =
-[
-    new Genre { Id = new Guid("4e179397-c3f1-45ec-a271-c26f07ff64f3"), Name = "Fighting"},
-    new Genre { Id = new Guid("b2c3d4e5-f678-90a1-b2c3-d4e5f67890a1"), Name = "Kids and Family" },
-    new Genre { Id = new Guid("c3d4e5f6-7890-a1b2-c3d4-e5f67890a1b2"), Name = "Racing" },
-    new Genre { Id = new Guid("d4e5f678-90a1-b2c3-d4e5-f67890a1b2c3"), Name = "Roleplaying" },
-    new Genre { Id = new Guid("e5f67890-a1b2-c3d4-e5f6-7890a1b2c3d4"), Name = "Sports" }
-];
-
-List<Game> games =
-[
-    new Game {
-        Id = Guid.NewGuid(),
-        Name = "Donkey Kong",
-        Genre = genres[0],
-        Price = 19.99m,
-        ReleaseDate = new DateOnly(1982, 7, 15),
-        Description = "Donkey Kong[a] is a video game series and media franchise created by the Japanese game designer Shigeru Miyamoto for Nintendo. It follows the adventures of Donkey Kong, a large, powerful gorilla, and other members of the Kong family of simians.."
-    },
-    new Game {
-        Id = Guid.NewGuid(),
-        Name = "Lego Villains",
-        Genre = genres[1],
-        Price = 59.99m,
-        ReleaseDate = new DateOnly(2010, 9, 30),
-        Description = "Smash legos and grab gold bricks as the Joker."
-    },
-    new Game
-    {
-        Id = Guid.NewGuid(),
-        Name = "FIFA 23",
-        Genre = genres[2],
-        Price = 69.99m,
-        ReleaseDate = new DateOnly(2022, 9, 27),
-        Description = "FIFA 23 is a football video game published by EA Sports. It is the 30th and final installment in the FIFA series that is developed by EA Sports"
-    }
-];
+GameStoreData data = new();
 
 // GET /games
-app.MapGet("/games", () => games.Select(game => new GameSummaryDto(
-    game.Id,
-    game.Name,
-    game.Genre.Name,
-    game.Price,
-    game.ReleaseDate
-)));
+app.MapGet("/games", () => data.GetGames()
+                        .Select(game => new GameSummaryDto(
+                            game.Id,
+                            game.Name,
+                            game.Genre.Name,
+                            game.Price,
+                            game.ReleaseDate
+                        )));
 
 // GET /games/122233-434d-43434....
 app.MapGet("/games/{id}", (Guid id) =>
 {
-    Game? game = games.Find(game => game.Id == id);
+    Game? game = data.GetGame(id);
 
     return game is null ? Results.NotFound() : Results.Ok(
         new GameDetailsDto(
@@ -77,7 +43,7 @@ app.MapGet("/games/{id}", (Guid id) =>
 // POST /games
 app.MapPost("/games", (CreateGameDto gameDto) =>
 {
-    var genre = genres.Find(genre => genre.Id == gameDto.GenreId);
+    var genre = data.GetGenre(gameDto.GenreId);
 
     if (genre is null)
     {
@@ -86,7 +52,6 @@ app.MapPost("/games", (CreateGameDto gameDto) =>
 
     var game = new Game
     {
-        Id = Guid.NewGuid(),
         Name = gameDto.Name,
         Genre = genre,
         Price = gameDto.Price,
@@ -94,7 +59,7 @@ app.MapPost("/games", (CreateGameDto gameDto) =>
         Description = gameDto.Description
     };
 
-    games.Add(game);
+    data.AddGame(game);
 
     return Results.CreatedAtRoute(
         GetGameEndpointName,
@@ -112,14 +77,14 @@ app.MapPost("/games", (CreateGameDto gameDto) =>
 // PUT /games/122233-434d-43434....
 app.MapPut("/games/{id}", (Guid id, UpdateGameDto gameDto) =>
 {
-    var existingGame = games.Find(game => game.Id == id);
+    var existingGame = data.GetGame(id);
 
     if (existingGame is null)
     {
         return Results.NotFound();
     }
 
-    var genre = genres.Find(genre => genre.Id == gameDto.GenreId);
+    var genre = data.GetGenre(gameDto.GenreId);
 
     if (genre is null)
     {
@@ -138,14 +103,15 @@ app.MapPut("/games/{id}", (Guid id, UpdateGameDto gameDto) =>
 // DELETE /games/122233-434d-43434....
 app.MapDelete("/games/{id}", (Guid id) =>
 {
-    games.RemoveAll(game => game.Id == id);
+    data.RemoveGame(id);
 
     return Results.NoContent();
 });
 
 // GET /genres
 app.MapGet("/genres", () =>
-    genres.Select(genre => new GenreDto(genre.Id, genre.Name)));
+    data.GetGenres()
+            .Select(genre => new GenreDto(genre.Id, genre.Name)));
 
 app.Run();
 

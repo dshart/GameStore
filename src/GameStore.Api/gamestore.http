@@ -1,7 +1,7 @@
 GET http://localhost:5166/games
 
 ###
-GET http://localhost:5166/games/0060786b-045b-4a56-85d0-af6fb7503a84
+GET http://localhost:5166/games/b09bfca7-a4ab-4d83-b740-68be442f47a4
 
 ###
 POST http://localhost:5166/games
@@ -17,7 +17,7 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:5166/games/44a11f26-c004-44eb-b071-35d383b23e31
+PUT http://localhost:5166/games/fd5d3e48-8265-4ae1-9f7a-daca3edc3f51
 Content-Type: application/json
 
 {
@@ -30,7 +30,7 @@ Content-Type: application/json
 
 
 ###
-DELETE http://localhost:5166/games/44a11f26-c004-44eb-b071-35d383b23e31
+DELETE http://localhost:5166/games/fd5d3e48-8265-4ae1-9f7a-daca3edc3f51
 
 ###
 GET http://localhost:5166/genres
