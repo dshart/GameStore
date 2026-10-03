@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using GameStore.Api.Models;
 using GameStore.Api.Data;
 using GameStore.Api.Features.Games.GetGames;
+using GameStore.Api.Features.Games.GetGameById;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,24 +15,7 @@ const string GetGameEndpointName = "GetGame";
 GameStoreData data = new();
 
 app.MapGetGames(data);
-
-// GET /games/122233-434d-43434....
-app.MapGet("/games/{id}", (Guid id) =>
-{
-    Game? game = data.GetGame(id);
-
-    return game is null ? Results.NotFound() : Results.Ok(
-        new GameDetailsDto(
-            game.Id,
-            game.Name,
-            game.Genre.Id,
-            game.Price,
-            game.ReleaseDate,
-            game.Description
-        )
-    );
-})
-.WithName(GetGameEndpointName);
+app.MapGetGameById(data);
 
 // POST /games
 app.MapPost("/games", (CreateGameDto gameDto) =>
@@ -108,13 +92,7 @@ app.MapGet("/genres", () =>
 
 app.Run();
 
-public record GameDetailsDto(
-    Guid Id,
-    string Name,
-    Guid GenreId,
-    decimal Price,
-    DateOnly ReleaseDate,
-    string Description);
+
 
 public record CreateGameDto(
     [Required][StringLength(50)]

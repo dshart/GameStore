@@ -1,7 +1,7 @@
 GET http://localhost:5166/games
 
 ###
-GET http://localhost:5166/games/b09bfca7-a4ab-4d83-b740-68be442f47a4
+GET http://localhost:5166/games/e9cb56c2-3fe9-4c6f-aa6f-fda397af023d
 
 ###
 POST http://localhost:5166/games
