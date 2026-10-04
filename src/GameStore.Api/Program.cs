@@ -3,6 +3,7 @@ using GameStore.Api.Models;
 using GameStore.Api.Data;
 using GameStore.Api.Features.Games.GetGames;
 using GameStore.Api.Features.Games.GetGameById;
+using GameStore.Api.Features.Games.CreateGame;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,46 +11,11 @@ builder.Services.AddValidation();
 
 var app = builder.Build();
 
-const string GetGameEndpointName = "GetGame";
-
 GameStoreData data = new();
 
 app.MapGetGames(data);
 app.MapGetGameById(data);
-
-// POST /games
-app.MapPost("/games", (CreateGameDto gameDto) =>
-{
-    var genre = data.GetGenre(gameDto.GenreId);
-
-    if (genre is null)
-    {
-        return Results.BadRequest("Invalid Genre id");
-    }
-
-    var game = new Game
-    {
-        Name = gameDto.Name,
-        Genre = genre,
-        Price = gameDto.Price,
-        ReleaseDate = gameDto.ReleaseDate,
-        Description = gameDto.Description
-    };
-
-    data.AddGame(game);
-
-    return Results.CreatedAtRoute(
-        GetGameEndpointName,
-        new { id = game.Id },
-        new GameDetailsDto(
-            game.Id,
-            game.Name,
-            game.Genre.Id,
-            game.Price,
-            game.ReleaseDate,
-            game.Description
-        ));
-});
+app.MapCreateGame(data);
 
 // PUT /games/122233-434d-43434....
 app.MapPut("/games/{id}", (Guid id, UpdateGameDto gameDto) =>
@@ -92,18 +58,6 @@ app.MapGet("/genres", () =>
 
 app.Run();
 
-
-
-public record CreateGameDto(
-    [Required][StringLength(50)]
-    string Name,
-    Guid GenreId,
-    [Range(1, 100)] 
-    decimal Price,
-    DateOnly ReleaseDate,
-    [Required][StringLength(500)] 
-    string Description
-);
 
 public record UpdateGameDto(
     [Required][StringLength(50)] string Name,
