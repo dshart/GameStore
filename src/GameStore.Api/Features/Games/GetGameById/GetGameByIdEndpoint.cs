@@ -10,7 +10,7 @@ public static class GetGameByIdEndpoint
         this IEndpointRouteBuilder app,
         GameStoreData data)
     {
-        app.MapGet("/games/{id}", (Guid id) =>
+        app.MapGet("/{id}", (Guid id) =>
         {
             Game? game = data.GetGame(id);
 
@@ -27,4 +27,4 @@ public static class GetGameByIdEndpoint
         })
         .WithName(EndpointNames.GetGame);
     }
-}    
+}
