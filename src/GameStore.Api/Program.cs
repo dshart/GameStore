@@ -4,14 +4,14 @@ using GameStore.Api.Features.Genres.GetGenres;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddTransient<GameStoreData>();
+
 builder.Services.AddValidation();
 
 var app = builder.Build();
 
-GameStoreData data = new();
-
-app.MapGames(data);
-app.MapGetGenres(data);
+app.MapGames();
+app.MapGetGenres();
 
 app.Run();
 
