@@ -4,7 +4,8 @@ using GameStore.Api.Features.Genres;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddTransient<GameStoreData>();
+builder.Services.AddScoped<GameStoreData>();
+builder.Services.AddTransient<GameDataLogger>();
 
 builder.Services.AddValidation();
 
