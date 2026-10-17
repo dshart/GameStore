@@ -22,6 +22,7 @@ public static class CreateGameEndpoint
             {
                 Name = gameDto.Name,
                 Genre = genre,
+                GenreId = genre.Id,
                 Price = gameDto.Price,
                 ReleaseDate = gameDto.ReleaseDate,
                 Description = gameDto.Description
@@ -36,7 +37,7 @@ public static class CreateGameEndpoint
                 new GameDetailsDto(
                     game.Id,
                     game.Name,
-                    game.Genre.Id,
+                    game.GenreId,
                     game.Price,
                     game.ReleaseDate,
                     game.Description
